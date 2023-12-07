@@ -1,0 +1,10 @@
+numpy
+matplotlib
+cv2
+keras
+h5py
+scipy
+tensorflow
+pickle
+itertools
+sklearn
