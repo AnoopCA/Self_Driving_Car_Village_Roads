@@ -1,14 +1,11 @@
 import numpy as np
-from keras.layers import Dense, Activation, Flatten, Conv2D, Lambda
-from keras.layers import MaxPooling2D, Dropout
+import pickle
+from keras.layers import Dense, Activation, Flatten, Conv2D, Lambda, MaxPooling2D, Dropout
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
 import keras.backend as K
-import pickle
-
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
 
 def keras_model(image_x, image_y):
     model = Sequential()
@@ -45,18 +42,14 @@ def keras_model(image_x, image_y):
     filepath = r"D:\ML_Projects\Self_Driving_Car_Village_Roads\models\Autopilot.h5"
     checkpoint = ModelCheckpoint(filepath, verbose=1, save_best_only=True)
     callbacks_list = [checkpoint]
-
     return model, callbacks_list
-
 
 def loadFromPickle():
     with open("features", "rb") as f:
         features = np.array(pickle.load(f))
     with open("labels", "rb") as f:
         labels = np.array(pickle.load(f))
-
     return features, labels
-
 
 def main():
     features, labels = loadFromPickle()
@@ -65,11 +58,9 @@ def main():
     train_x = train_x.reshape(train_x.shape[0], 100, 100, 1)
     test_x = test_x.reshape(test_x.shape[0], 100, 100, 1)
     model, callbacks_list = keras_model(100, 100)
-    model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=2, batch_size=32, callbacks=callbacks_list)
-    #print_summary(model)
+    model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=128, batch_size=32, callbacks=callbacks_list)
     print(model)
     model.save(r"D:\ML_Projects\Self_Driving_Car_Village_Roads\models\Autopilot.h5")
-
 
 main()
 K.clear_session();
