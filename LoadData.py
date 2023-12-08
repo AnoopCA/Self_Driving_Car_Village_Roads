@@ -16,11 +16,9 @@ def preprocess(img):
     return resized
 
 def return_data():
-
     X = []
     y = []
     features = []
-
     with open(TRAIN_FILE) as fp:
         for line in islice(fp, LIMIT):
             path, angle = line.strip().split()
