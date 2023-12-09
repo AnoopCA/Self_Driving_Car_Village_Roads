@@ -1,5 +1,7 @@
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
+import cv2
 from keras.layers import Dense, Activation, Flatten, Conv2D, Lambda, MaxPooling2D, Dropout
 from keras.models import Sequential
 from keras.callbacks import ModelCheckpoint
@@ -44,15 +46,29 @@ def keras_model(image_x, image_y):
     callbacks_list = [checkpoint]
     return model, callbacks_list
 
-def loadFromPickle():
-    with open("features", "rb") as f:
-        features = np.array(pickle.load(f))
-    with open("labels", "rb") as f:
-        labels = np.array(pickle.load(f))
+def loadFromPickle(in_format='img'):
+    if in_format == 'img':
+        with open(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\features', 'rb') as f:
+            features = np.array(pickle.load(f))
+        with open(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\labels', 'rb') as f:
+            labels = np.array(pickle.load(f))
+    else:
+        feature = []
+        cap = cv2.VideoCapture(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\generate_labels\out_labels.txt')
+        ret, frame = cap.read()
+        while True:
+            img = plt.imread(frame)
+            feature.append(cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100)))
+            ret, frame = cap.read()
+            if not ret:
+                break
+        features = np.array(feature).astype('float32')
+        with open(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\labels', 'rb') as f:
+            labels = np.array(pickle.load(f))
     return features, labels
 
 def main():
-    features, labels = loadFromPickle()
+    features, labels = loadFromPickle('vid')
     features, labels = shuffle(features, labels)
     train_x, test_x, train_y, test_y = train_test_split(features, labels, random_state=0, test_size=0.3)
     train_x = train_x.reshape(train_x.shape[0], 100, 100, 1)

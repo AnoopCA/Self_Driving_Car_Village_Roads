@@ -9,4 +9,4 @@ This self-driving car project focuses on navigating village roads. The project i
 This project draws inspiration from Sully Chen's work in the field of self-driving cars.
 
 ### Credits
-- Sully Chen: [https://github.com/SullyChen/Autopilot-TensorFlow](https://github.com/SullyChen/Autopilot-TensorFlow)
+- Sully Chen: [https://github.com/SullyChen/driving-datasets](#)
