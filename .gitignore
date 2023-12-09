@@ -1,5 +1,7 @@
 .vscode/
 Archives/
+generate_labels/steering_test_raw.mp4
+generate_labels/steering_test_resized.mp4
 generate_labels/steering_wheel.mp4
 test/
 train/
