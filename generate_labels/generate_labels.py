@@ -83,7 +83,7 @@ def main():
         train_x = train_x.reshape(train_x.shape[0], 100, 100, 1)
         test_x = test_x.reshape(test_x.shape[0], 100, 100, 1)
         model = keras_model(100, 100)
-        model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=1, batch_size=32)
+        model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=128, batch_size=32)
         model.save(LABEL_MODEL)
     else:
         model = keras.models.load_model(LABEL_MODEL)
@@ -97,8 +97,8 @@ def main():
         img = img.reshape(1, 100, 100, 1)
         x = model.predict(img).item()
         label_pred.append(x)
-        cv2.imshow(str(x), frame)
-        cv2.waitKey(1000)
+        #cv2.imshow(str(x), frame)
+        #cv2.waitKey(1000)
         
         ret, frame = cap.read()
         if not ret:
