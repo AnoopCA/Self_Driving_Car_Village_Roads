@@ -6,5 +6,6 @@ generate_labels/steering_test_resized.mp4
 generate_labels/steering_wheel.mp4
 test/
 train/
+execution_notes.txt
 features
 labels
