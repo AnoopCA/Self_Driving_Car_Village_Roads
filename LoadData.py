@@ -1,7 +1,6 @@
 import cv2
 import os
 import numpy as np
-
 import scipy
 import pickle
 import matplotlib.pyplot as plt
