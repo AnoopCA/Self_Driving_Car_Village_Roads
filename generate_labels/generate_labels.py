@@ -67,8 +67,8 @@ def return_data():
         for line in islice(fp, LIMIT):
             path, angle = line.strip().split()
             y.append(float(angle) * scipy.pi / 180)
-            #img = plt.imread(frame)
-            img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            img = plt.imread(frame)
+            #img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             features.append(cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100)))
             ret, frame = cap.read()
     features = np.array(features).astype('float32')
@@ -95,10 +95,10 @@ def main():
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         img = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100))
         img = img.reshape(1, 100, 100, 1)
-        x = model.predict(img).item()
+        x = model.predict(img).item() * 60
         label_pred.append(x)
-        #cv2.imshow(str(x), frame)
-        #cv2.waitKey(1000)
+        cv2.imshow(str(x), frame)
+        cv2.waitKey(1000)
         
         ret, frame = cap.read()
         if not ret:
