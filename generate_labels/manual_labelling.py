@@ -4,7 +4,6 @@ import numpy as np
 def overlay_image(background, overlay, alpha, position):
     y, x = position
     h, w = overlay.shape[:2]
-    overlay = overlay[:h, :w]
     overlay_rgb = overlay[:, :, :3]
     overlay_alpha = overlay[:, :, 3] / 255.0
 
