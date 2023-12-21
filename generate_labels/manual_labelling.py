@@ -27,7 +27,7 @@ while cap.isOpened():
     if not ret:
         break
     # Calculate the new dimensions for the resized overlay
-    scale_factor = 0.7
+    scale_factor = 0.75
     new_overlay_height = int(overlay_height * scale_factor)
     new_overlay_width = int(overlay_width * scale_factor)
     # Resize the overlay image
