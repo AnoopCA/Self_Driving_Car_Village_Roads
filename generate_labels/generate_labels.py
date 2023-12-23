@@ -2,18 +2,13 @@
 import cv2
 import os
 import scipy
-import pickle
 import matplotlib.pyplot as plt
-from itertools import islice
 import numpy as np
 import keras
 from keras.layers import Dense, Activation, Flatten, Conv2D, Lambda, MaxPooling2D, Dropout
 from keras.models import Sequential
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
-#def preprocess_input(x):
-#    return x / 127.5 - 1.
 
 def keras_model(image_x, image_y):
     model = Sequential()
@@ -49,7 +44,6 @@ def keras_model(image_x, image_y):
     model.compile(optimizer='adam', loss="mse")
     return model
 
-LIMIT = None
 DATA_FOLDER = r'D:\ML_Projects\Self_Driving_Car_Village_Roads\generate_labels'
 TRAIN_FILE = os.path.join(DATA_FOLDER, 'steering_wheel.mp4')
 LABEL_FILE = os.path.join(DATA_FOLDER, 'train_labels.txt')
@@ -58,21 +52,20 @@ OUTPUT_FILE = os.path.join(DATA_FOLDER, 'out_labels.txt')
 LABEL_MODEL = os.path.join(DATA_FOLDER, 'label_model')
 
 def return_data():
-    X = []
     y = []
     features = []
     cap = cv2.VideoCapture(TRAIN_FILE)
     ret, frame = cap.read()
     with open(LABEL_FILE) as fp:
-        for line in islice(fp, LIMIT):
+        for line in fp:
             path, angle = line.strip().split()
             y.append(float(angle) * scipy.pi / 180)
             img = plt.imread(frame)
-            #img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             features.append(cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100)))
             ret, frame = cap.read()
     features = np.array(features).astype('float32')
     labels = np.array(y).astype('float32')
+    cap.release()
     return features, labels
 
 def main():
@@ -92,13 +85,14 @@ def main():
     cap = cv2.VideoCapture(TEST_FILE)
     ret, frame = cap.read()
     while True:
-        img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        img = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100))
+        #img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        #img = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100))
+        img = cv2.resize((cv2.cvtColor(frame, cv2.COLOR_BGR2HSV))[:, :, 1], (100, 100))
         img = img.reshape(1, 100, 100, 1)
-        x = model.predict(img).item() * 60
+        x = model.predict(img).item() * (180 / scipy.pi)
         label_pred.append(x)
-        cv2.imshow(str(x), frame)
-        cv2.waitKey(1000)
+        #cv2.imshow(str(x), frame)
+        #cv2.waitKey(1000)
         
         ret, frame = cap.read()
         if not ret:
