@@ -21,22 +21,22 @@ cap = cv2.VideoCapture(video_path)
 protractor_path = r'D:\ML_Projects\Self_Driving_Car_Village_Roads\generate_labels\Protractor_360.png'
 overlay = cv2.imread(protractor_path, cv2.IMREAD_UNCHANGED)
 overlay_height, overlay_width = overlay.shape[:2]
-
+scale_factor = 0.75
+transparency = 0.25
+new_overlay_height = int(overlay_height * scale_factor)
+new_overlay_width = int(overlay_width * scale_factor)
+    
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
         break
-    # Calculate the new dimensions for the resized overlay
-    scale_factor = 0.75
-    new_overlay_height = int(overlay_height * scale_factor)
-    new_overlay_width = int(overlay_width * scale_factor)
     # Resize the overlay image
     overlay_resized = cv2.resize(overlay, (new_overlay_width, new_overlay_height))
     # Calculate the position to center the overlay on the frame
     y_offset = (frame.shape[0] - new_overlay_height) // 2
     x_offset = (frame.shape[1] - new_overlay_width) // 2
     # Overlay the frame with the resized overlay
-    result_frame = overlay_image(frame, overlay_resized, 0.25, (y_offset, x_offset))
+    result_frame = overlay_image(frame, overlay_resized, transparency, (y_offset, x_offset))
     cv2.imshow('Capture labels', result_frame)
     cv2.waitKey(1000)
 
