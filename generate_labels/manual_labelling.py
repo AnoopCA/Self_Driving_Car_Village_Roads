@@ -38,7 +38,7 @@ while cap.isOpened():
     # Overlay the frame with the resized overlay
     result_frame = overlay_image(frame, overlay_resized, transparency, (y_offset, x_offset))
     cv2.imshow('Capture labels', result_frame)
-    cv2.waitKey(1000)
+    cv2.waitKey(100)
 
 cap.release()
 cv2.destroyAllWindows()
