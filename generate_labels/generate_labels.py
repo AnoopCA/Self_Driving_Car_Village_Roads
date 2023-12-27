@@ -58,7 +58,7 @@ def return_data():
     ret, frame = cap.read()
     with open(LABEL_FILE) as fp:
         for line in fp:
-            path, angle = line.strip().split()
+            _, angle = line.strip().split()
             y.append(float(angle) * scipy.pi / 180)
             img = plt.imread(frame)
             features.append(cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100)))
@@ -85,14 +85,12 @@ def main():
     cap = cv2.VideoCapture(TEST_FILE)
     ret, frame = cap.read()
     while True:
-        #img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        #img = cv2.resize((cv2.cvtColor(img, cv2.COLOR_RGB2HSV))[:, :, 1], (100, 100))
         img = cv2.resize((cv2.cvtColor(frame, cv2.COLOR_BGR2HSV))[:, :, 1], (100, 100))
         img = img.reshape(1, 100, 100, 1)
         x = model.predict(img).item() * (180 / scipy.pi)
         label_pred.append(x)
         #cv2.imshow(str(x), frame)
-        #cv2.waitKey(1000)
+        #cv2.waitKey(500)
         
         ret, frame = cap.read()
         if not ret:
