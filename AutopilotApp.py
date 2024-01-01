@@ -1,3 +1,4 @@
+#This section of code is to show a demo of the self-driving car steering wheel simulation
 import numpy as np
 import cv2
 from keras.models import load_model
