@@ -15,6 +15,7 @@ def keras_predict(model, image):
 steer = cv2.imread(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\steering_wheel_image.jpg', 0)
 rows, cols = steer.shape
 smoothed_angle = 0
+#This is a sample video to test the prediction of driving angles
 cap = cv2.VideoCapture(r'D:\ML_Projects\Self_Driving_Car_Village_Roads\test\forest.mp4')  #CarTop, forest, HighSpeed, my_forest
 
 while cap.isOpened():
