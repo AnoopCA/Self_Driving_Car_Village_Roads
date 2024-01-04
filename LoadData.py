@@ -1,3 +1,6 @@
+"""
+Load and preprocess training data for the Self-Driving Car model from images and corresponding steering angles.
+"""
 import cv2
 import os
 import numpy as np
