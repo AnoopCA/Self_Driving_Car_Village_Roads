@@ -1,3 +1,4 @@
+# Convolutional Neural Network model for self-driving car training using Keras.
 import numpy as np
 import pickle
 import scipy
