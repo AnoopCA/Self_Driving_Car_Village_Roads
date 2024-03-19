@@ -76,8 +76,8 @@ def main():
     features, labels = load_data('img') #vid
     features, labels = shuffle(features, labels)
     train_x, test_x, train_y, test_y = train_test_split(features, labels, test_size=0.3)
-    train_x = train_x.reshape(train_x.shape[0], 100, 100, 1)
-    test_x = test_x.reshape(test_x.shape[0], 100, 100, 1)
+    #train_x = train_x.reshape(train_x.shape[0], 100, 100, 1)
+    #test_x = test_x.reshape(test_x.shape[0], 100, 100, 1)
     model, callbacks_list = keras_model(100, 100)
     model.fit(train_x, train_y, validation_data=(test_x, test_y), epochs=128, batch_size=32, callbacks=callbacks_list)
     print(model)
